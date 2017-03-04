@@ -1,6 +1,7 @@
 # coding: utf-8
 import sys, os
-sys.path.append(os.pardir)  # 부모 디렉터리의 파일을 가져올 수 있도록 
+
+sys.path.append(os.pardir)  # 부모 디렉터리의 파일을 가져올 수 있도록
 import numpy as np
 import pickle
 from dataset.mnist import load_mnist
@@ -35,13 +36,29 @@ def predict(network, x):
 x, t = get_data()
 network = init_network()
 
-batch_size = 100 # 배치 크기
+batch_size = 100  # 배치 크기
 accuracy_cnt = 0
 
 for i in range(0, len(x), batch_size):
-    x_batch = x[i:i+batch_size]
+    x_batch = x[i:i + batch_size]
     y_batch = predict(network, x_batch)
     p = np.argmax(y_batch, axis=1)
-    accuracy_cnt += np.sum(p == t[i:i+batch_size])
+    accuracy_cnt += np.sum(p == t[i:i + batch_size])
 
 print("Accuracy:" + str(float(accuracy_cnt) / len(x)))
+
+# test
+# 1. argmax(x, axis)
+x = np.array([[0.1, 0.8, 0.1], [0.3, 0.1, 0.6], [0.2, 0.5, 0.3], [0.8, 0.1, 0.1]])
+print(x)
+
+y = np.argmax(x)
+print(y)
+y = np.argmax(x, axis=1)
+print(y)
+
+# 2.
+y = np.array([1, 2, 1, 0])
+t = np.array([1, 2, 0, 0])
+print(y == t) # [ True  True False  True]
+print(np.sum(y == t)) # 3
